@@ -33,7 +33,8 @@ export const getAll = () =>
 //     body: JSON.stringify({ shelf })
 //   }).then(res => res.json())
 
-export const search = (query:String) =>
+export const search = (query:any) =>
+
   fetch(`${api}/search`, {
     method: 'POST',
     headers: {
