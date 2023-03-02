@@ -6,6 +6,7 @@ import { getAll, search } from "../data/BookApi";
 function Banner() {
   const [allData, setAllData] = React.useState([]);
   const [show, setShow] = React.useState(false);
+  const [value, setValue] = React.useState("move to read");
   React.useEffect(() => {
     const fetchData = async () => {
       const data = await getAll()
@@ -31,12 +32,13 @@ function Banner() {
   //     currentlyreading.some((ind: any) => ind?.id === id && setShow(true));
   // };
   // console.log(show);
-  const [value, setValue] = React.useState("move to read");
+
 
   const handleChange = (e: any) => {
    
     setValue(e.target.value);
   };
+  console.log(value,':::')
   return (
     <div>
       <div style={{ backgroundColor: "teal", padding: "3px" }}>
