@@ -1,15 +1,37 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { search } from "../data/BookApi";
+import { getAll, search ,get} from "../data/BookApi";
 function Search() {
-  const [searchMy, setSearchMy] = React.useState<string>("");
+  const [query, setSearchMy] = React.useState<string>("");
   const [searchInput, setSearchInput] = React.useState();
   const onChangeHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchMy(e.currentTarget.value);
   };
 
-  const myinput: any = search(searchMy);
-
+  useEffect(() => {
+    // declare the async data fetching function
+    const fetchData = async () => {
+      // get the data from the api
+      const data = await getAll()
+      .then((res) => {
+        console.log(res,"RESP");
+        // setState('success');
+        // setCatUrl('https://cataas.com' + res.data.url);
+    })
+    .catch((err) => {
+        // console.error('Error:', err);
+        // setState('error');
+        // setError(err);
+    });
+    }
+  
+    // call the function
+    fetchData()
+      // make sure to catch any error
+      .catch(console.error);;
+  }, [])
+  // const myinput: any = search(searchMy);
+ 
   return (
     <form role="search">
       <div
@@ -25,7 +47,7 @@ function Search() {
           type="search"
           id="mySearch"
           name="q"
-          value={searchMy}
+          value={query}
           onChange={(e) => onChangeHandler(e)}
           placeholder="Search the book…"
           aria-label="Search through site content"

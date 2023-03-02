@@ -11,7 +11,7 @@ const headers = {
   'Authorization': token
 }
 console.log(token,'TOKEN')
-export const get = (bookId:number) =>
+export const get = (bookId:any) =>
   fetch(`${api}/books/${bookId}`, { headers })
     .then(res => res.json())
     .then(data => data.book)
