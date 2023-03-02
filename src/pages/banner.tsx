@@ -33,9 +33,9 @@ function Banner() {
   // console.log(show);
   const [value, setValue] = React.useState("move to read");
 
-  const handleChange = (event: any,dat:any) => {
-    console.log(dat,)
-    setValue(event.target.value);
+  const handleChange = (e: any) => {
+   
+    setValue(e.target.value);
   };
   return (
     <div>
@@ -56,7 +56,7 @@ function Banner() {
                 />
 
                 <label>
-                  <select value={value} onChange={(e)=>handleChange(dat,e)}>
+                  <select  onChange={(e)=>handleChange(e)}>
                   <option value="moveto" disabled>Move to</option>
                     <option value="currentlyReading">currently Reading</option>
                     <option value="wantToRead">Want To Read</option>
