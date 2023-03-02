@@ -5,6 +5,7 @@ import { CLIENT_RENEG_LIMIT } from "tls";
 import { getAll, search } from "../data/BookApi";
 function Banner() {
   const [allData, setAllData] = React.useState([]);
+  const [show, setShow] = React.useState(false);
   React.useEffect(() => {
     const fetchData = async () => {
       const data = await getAll()
@@ -18,10 +19,24 @@ function Banner() {
 
     fetchData().catch(console.error);
   }, []);
- const currentlyreading= allData.filter((fil:any)=>fil.shelf==='currentlyReading')
- const wantreading= allData.filter((fil:any)=>fil.shelf==='wantToRead')
- const read= allData.filter((fil:any)=>fil.shelf==='read')
+  const currentlyreading = allData.filter(
+    (fil: any) => fil.shelf === "currentlyReading"
+  );
+  const wantreading = allData.filter((fil: any) => fil.shelf === "wantToRead");
+  const read = allData.filter((fil: any) => fil.shelf === "read");
+  // const handleShow = (id: any) => {
+  //   const mNewData =
+  //     id &&
+  //     currentlyreading &&
+  //     currentlyreading.some((ind: any) => ind?.id === id && setShow(true));
+  // };
+  // console.log(show);
+  const [value, setValue] = React.useState("move to read");
 
+  const handleChange = (event: any,dat:any) => {
+    console.log(dat,)
+    setValue(event.target.value);
+  };
   return (
     <div>
       <div style={{ backgroundColor: "teal", padding: "3px" }}>
@@ -29,40 +44,70 @@ function Banner() {
       </div>
       <div style={{ margin: "30px" }}>
         <h4 style={{ textAlign: "left" }}>Currently Reading</h4>
-        <p style={{display:'flex',justifyContent:'center',gap:'40px' ,}}>
-          {currentlyreading.map((dat:any)=>{
-            return(
-              <div >
-              <p>{dat.title}</p>
-              <img src={dat.imageLinks.smallThumbnail}/>
+        <div style={{ display: "flex", justifyContent: "center", gap: "40px" }}>
+          {currentlyreading.map((dat: any) => {
+            return (
+              <div style={{ width: "260px" }} key={dat.id}>
+                <p>{dat.title}</p>
+                <img
+                  src={dat.imageLinks.smallThumbnail}
+                  height="140px"
+                  style={{ position: "relative" }}
+                />
+
+                <label>
+                  <select value={value} onChange={(e)=>handleChange(dat,e)}>
+                  <option value="moveto" disabled>Move to</option>
+                    <option value="currentlyReading">currently Reading</option>
+                    <option value="wantToRead">Want To Read</option>
+                    <option value="read">Read</option>
+                    <option value="none">None</option>
+                  </select>
+                </label>
+                {/* <button
+                  onClick={() => handleShow(dat.id)}
+                  style={{
+                    backgroundColor: "yellow",
+                    border: "none",
+                    width: "40px",
+                    height: "40px",
+                    position: "absolute",
+                    top: 330,
+                    cursor: "pointer",
+                    borderRadius: "90px",
+                  }}
+                >
+                  +
+                </button>
+                {show && <p>sddfsdfsd</p>} */}
               </div>
-            )
+            );
           })}
-        </p>
+        </div>
         <hr style={{ marginLeft: 0 }} />
         <h4 style={{ textAlign: "left" }}>Want To Read</h4>
-        <p style={{display:'flex',justifyContent:'center',gap:'40px' ,}}>
-          {wantreading.map((dat:any)=>{
-            return(
-              <div >
-              <p>{dat.title}</p>
-              <img src={dat.imageLinks.smallThumbnail}/>
+        <div style={{ display: "flex", justifyContent: "center", gap: "40px" }}>
+          {wantreading.map((dat: any) => {
+            return (
+              <div key={dat.id}>
+                <p>{dat.title}</p>
+                <img src={dat.imageLinks.smallThumbnail} height="140px" />
               </div>
-            )
+            );
           })}
-        </p>
+        </div>
         <hr style={{ marginLeft: 0 }} />
         <h4 style={{ textAlign: "left" }}>Read Done</h4>
-        <p style={{display:'flex',justifyContent:'center',gap:'40px' ,}}>
-          {read.map((dat:any)=>{
-            return(
-              <div >
-              <p>{dat.title}</p>
-              <img src={dat.imageLinks.smallThumbnail}/>
+        <div style={{ display: "flex", justifyContent: "center", gap: "40px" }}>
+          {read.map((dat: any) => {
+            return (
+              <div key={dat.id}>
+                <p>{dat.title}</p>
+                <img src={dat.imageLinks.smallThumbnail} height="140px" />
               </div>
-            )
+            );
           })}
-        </p>
+        </div>
         <hr style={{ marginLeft: 0 }} />
       </div>
       <div>
